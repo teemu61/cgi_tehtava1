@@ -27,7 +27,6 @@ public class PersonRepositoryTest {
         Person person = new Person();
         person.setFirstName("Jussi");
         person.setLastName("Rantanen");
-        person.setCity("Espoo");
 
         //save person, verify has ID value after save
         assertNull(person.getId()); //null before save

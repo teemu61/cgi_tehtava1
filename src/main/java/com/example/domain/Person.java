@@ -20,8 +20,6 @@ public class Person {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    private String streetAddress;
-    private String city;
     private String sotu;
     private String language;
 
@@ -64,10 +62,6 @@ public class Person {
     public void setParentFrom(Set<Person> parentFrom) {
         this.parentFrom = parentFrom;
     }
-    public String getStreetAddress() {return streetAddress; }
-    public void setStreetAddress(String streetAddress) {this.streetAddress = streetAddress; }
-    public String getCity() {return city;}
-    public void setCity(String city) {this.city = city;}
     public String getSotu() {return sotu;}
     public void setSotu(String sotu) {this.sotu = sotu;}
     public String getLanguage() {return language;}

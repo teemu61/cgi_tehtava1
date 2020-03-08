@@ -41,7 +41,6 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         addressJussi.setCity("Espoo");
         addressJussi.setPostalCode("02780");
         jussi.setAddress(addressJussi);
-        jussi.setCity("Vantaa");
         jussi.setSotu("9865-983456");
         jussi.setLanguage("Suomi");
         jussi.setDateOfBirth(this.getDate("06/01/1998"));
