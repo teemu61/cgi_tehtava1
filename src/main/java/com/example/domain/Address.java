@@ -1,6 +1,8 @@
 package com.example.domain;
 
 import org.hibernate.annotations.GeneratorType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -14,7 +16,7 @@ public class Address {
     private String city;
     private String postalCode;
 
-    @OneToOne
+    @OneToOne(mappedBy = "address")
     private Person person;
 
     public Integer getId() {

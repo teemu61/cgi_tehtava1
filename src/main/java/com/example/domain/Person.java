@@ -16,7 +16,8 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     private String streetAddress;

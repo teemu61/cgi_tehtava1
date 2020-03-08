@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -17,6 +18,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Transactional
 @Controller
 public class PersonController {
 
@@ -32,7 +34,7 @@ public class PersonController {
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
     public String list(Model model){
         model.addAttribute("persons", personService.listAllPersons());
-        log.info("persons returned");
+        log.info("persons returned - show persons");
         return "persons";
     }
 
@@ -46,21 +48,21 @@ public class PersonController {
     @RequestMapping("person/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         model.addAttribute("person", personService.getPersonById(id));
-        log.info("personform1 returned");
+        log.info("personform returned. editing existing person.");
         return "personform";
     }
 
     @RequestMapping("person/new")
     public String newProduct(Model model){
         model.addAttribute("person", new Person());
-        log.info("personform2 returned");
+        log.info("personform returned. creating new person.");
         return "personform";
     }
 
     @RequestMapping(value = "person", method = RequestMethod.POST)
     public String savePerson(Person person){
         personService.savePerson(person);
-        log.info("redirect returned");
+        log.info("redirect returned - save person");
         return "redirect:/person/" + person.getId();
     }
 

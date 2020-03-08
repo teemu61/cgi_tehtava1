@@ -27,8 +27,8 @@
                 <td th:text="${person.id}"><a href="/person/${person.id}">Id</a></td>
                 <td th:text="${person.firstName}">First name</td>
                 <td th:text="${person.lastName}">Last name</td>
-                <td th:text="${person.streetAddress}">Street Address</td>
-                <td th:text="${person.city}">City</td>
+                <td th:text="${person.address?.streetAddress}">Street Address</td>
+                <td th:text="${person.address?.city}">City</td>
                 <td th:text="${person.sotu}">Social ID</td>
                 <td th:text="${person.language}">Language</td>
                 <td><a th:href="${ '/person/' + person.id}">View</a></td>
