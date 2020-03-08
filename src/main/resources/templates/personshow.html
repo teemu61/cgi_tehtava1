@@ -64,7 +64,7 @@
                     <label class="col-sm-2 control-label">Kids:</label>
                     <div class="col-sm-10">
                         <p class="form-control-static">
-                            <a th:each="kid : ${person.parentTo}"  th:text="${kid.id}+' '" th:href="'/person/' + ${kid.id}">Id</a>
+                            <a th:each="kid : ${person.parentTo}"  th:text="${kid.firstName}+'  '" th:href="'/person/' + ${kid.id}">Id</a>
                         </p>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <label class="col-sm-2 control-label">Parents:</label>
                     <div class="col-sm-10">
                         <p class="form-control-static">
-                            <a th:each="parent : ${person.parentFrom}"  th:text="${parent.id}+' '" th:href="'/person/' + ${parent.id}">Id</a>
+                            <a th:each="parent : ${person.parentFrom}"  th:text="${parent.firstName}+'  '" th:href="'/person/' + ${parent.id}">Id</a>
                         </p>
                     </div>
                 </div>
