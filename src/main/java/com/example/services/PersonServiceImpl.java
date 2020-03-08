@@ -20,9 +20,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Iterable<Person> listAllPersons() {
-
-        log.info("listAllPersons called");
-
         return personRepository.findAll();
     }
 

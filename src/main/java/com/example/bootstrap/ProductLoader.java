@@ -1,7 +1,10 @@
 package com.example.bootstrap;
 
 import com.example.domain.Person;
+import com.example.domain.Address;
+
 import com.example.repositories.PersonRepository;
+import com.example.repositories.AddressRepository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,11 +24,13 @@ import java.text.SimpleDateFormat;
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private PersonRepository personRespository;
+    private AddressRepository addressRepository;
     private Logger log = LogManager.getLogger(ProductLoader.class);
 
     @Autowired
-    public void setProductRepository(PersonRepository personRepository) {
+    public void setProductRepository(PersonRepository personRepository, AddressRepository addressRepository) {
         this.personRespository = personRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
@@ -34,6 +39,14 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         Person jussi = new Person();
         jussi.setFirstName("Jussi");
         jussi.setLastName("Rantanen");
+
+        Address addressJussi = new Address();
+        addressJussi.setStreetAddress("Mäkirinne 5");
+        addressJussi.setCity("Espoo");
+        addressJussi.setPostalCode("123456");
+        addressRepository.save(addressJussi);
+
+        jussi.setAddress(addressJussi);
         jussi.setStreetAddress("Mäkirinne 5");
         jussi.setCity("Vantaa");
         jussi.setSotu("9865-983456");

@@ -15,6 +15,10 @@ public class Person {
     private Integer id;
     private String firstName;
     private String lastName;
+
+    @OneToOne(mappedBy = "person", cascade = CascadeType.MERGE)
+    private Address address;
+
     private String streetAddress;
     private String city;
     private String sotu;
@@ -69,6 +73,10 @@ public class Person {
     public void setLanguage(String language) {this.language = language;}
     public Date getDateOfBirth() {return dateOfBirth;}
     public void setDateOfBirth(Date dateOfBirth) {this.dateOfBirth = dateOfBirth;}
+    public Address getAddress() { return address; }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Person init() {
         parentTo = new HashSet<>();
