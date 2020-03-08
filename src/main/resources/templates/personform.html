@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CGI Test</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h2>Person Details</h2>
+    <div>
+        <form class="form-horizontal" th:object="${person}" th:action="@{/person}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">First name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{firstName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Last name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{lastName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Street Address:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{streetAddress}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">City:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{city}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Social ID:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{sotu}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Language:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{language}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Date Of Birth:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{dateOfBirth}" placeholder="dd/MM/yyyy"  />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Kids:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{parentTo}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Parents:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{parentFrom}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
