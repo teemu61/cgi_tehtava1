@@ -70,6 +70,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-build-plugin</artifactId>
+				<version>1.11</version>
+			</plugin>
 		</plugins>
 	</build>
+
+
 </project>
