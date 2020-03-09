@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Transactional
+//@Transactional
 @Controller
 public class PersonController {
 
@@ -40,7 +40,8 @@ public class PersonController {
     @RequestMapping("person/{id}")
     public String showPerson(@PathVariable Integer id, Model model ){
         model.addAttribute("person", personService.getPersonById(id));
-        log.info("personshow returned");
+
+        log.info("personshow returned - fetch person from DB by id");
         return "personshow";
     }
 
@@ -57,6 +58,16 @@ public class PersonController {
         model.addAttribute("person", new Person());
         log.info("personform returned. creating new person.");
         return "personform";
+    }
+
+    @RequestMapping("person/education")
+    public String education(Model model){
+
+        //Education education = new Education();
+
+        model.addAttribute("education", new Education());
+        log.info("educationform returned.");
+        return "educationform";
     }
 
     @RequestMapping("person/query")

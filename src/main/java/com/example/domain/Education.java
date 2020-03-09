@@ -10,8 +10,10 @@ public class Education {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String certificate;
-    private Date certDate;
+    private Integer pid;
+
+    private String description;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name="person_id", nullable=false)
@@ -25,12 +27,20 @@ public class Education {
         this.id = id;
     }
 
-    public String getCertificate() {
-        return certificate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCertificate(String certificate) {
-        this.certificate = certificate;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Person getPerson() {
@@ -41,12 +51,12 @@ public class Education {
         this.person = person;
     }
 
-    public Date getCertDate() {
-        return certDate;
+    public Integer getPid() {
+        return pid;
     }
 
-    public void setCertDate(Date certDate) {
-        this.certDate = certDate;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }
 

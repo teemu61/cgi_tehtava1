@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CGI Tests</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div th:if="${not #lists.isEmpty(educations)}">
+        <h2>Education List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Person Id</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+            <tr th:each="education : ${educations}">
+                <td th:text="${education.id}"><a href="/education/${education.id}">Id</a></td>
+                <td th:text="${education.person?.id}">Person Id</td>
+                <td th:text="${education.description}">Description</td>
+                <td th:text="${education.date}">Date</td>
+                <td><a th:href="${ '/education/' + education.id}">View</a></td>
+                <td><a th:href="${'/education/edit/' + education.id} "  >Edit</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.example.domain.Person;
 import com.example.domain.Address;
 
 import com.example.domain.Education;
+import com.example.repositories.EducationRepository;
 import com.example.repositories.PersonRepository;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,15 +25,20 @@ import java.text.SimpleDateFormat;
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private PersonRepository personRespository;
+    private EducationRepository educationRepository;
     private Logger log = LogManager.getLogger(ProductLoader.class);
 
     @Autowired
-    public void setProductRepository(PersonRepository personRepository) {
+    public void setProductRepository(PersonRepository personRepository, EducationRepository educationRepository) {
         this.personRespository = personRepository;
+        this.educationRepository = educationRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
+        Education edu = new Education();
+        edu.setDescription("ylioppilas");
 
         Person jussi = new Person();
         jussi.setFirstName("Jussi");
@@ -42,13 +48,24 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         addressJussi.setCity("Espoo");
         addressJussi.setPostalCode("02780");
         jussi.setAddress(addressJussi);
-
         jussi.setSotu("9865-983456");
         jussi.setLanguage("Suomi");
         jussi.setDateOfBirth(this.getDate("06/01/1998"));
 
-        log.info("BEFORE saving jussi to database");
-        Person jussiSaved = personRespository.save(jussi);
+        edu.setPerson(jussi);
+
+        Set<Education> readEcucations = jussi.getEducations();
+        if (readEcucations != null) {
+            readEcucations.add(edu);
+            jussi.setEducations(readEcucations);
+        } else {
+          Set<Education> newEdus = new HashSet<>();
+          newEdus.add(edu);
+          jussi.setEducations(newEdus);
+        }
+
+
+        Person jussiSaved = personRespository.saveAndFlush(jussi);
 
         log.info("Saved Jussi - id: " +jussi.getId());
 
