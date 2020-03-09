@@ -2,6 +2,9 @@ package com.example.repositories;
 
 import com.example.configuration.RepositoryConfiguration;
 import com.example.domain.Person;
+import com.example.services.PersonServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,8 @@ public class PersonRepositoryTest {
 
     private PersonRepository personRepository;
 
+    private Logger log = LogManager.getLogger(PersonRepositoryTest.class);
+
     @Autowired
     public void setPersonRepository(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -27,6 +32,7 @@ public class PersonRepositoryTest {
         Person person = new Person();
         person.setFirstName("Jussi");
         person.setLastName("Rantanen");
+        person.setSotu("1111");
 
         //save person, verify has ID value after save
         assertNull(person.getId()); //null before save
@@ -34,6 +40,10 @@ public class PersonRepositoryTest {
         assertNotNull(person.getId()); //not null after save
         //fetch from DB
         Person fetchedPerson = personRepository.findById(person.getId()).orElse(null);
+
+        //check fetching by sotu
+        Person sotuPerson = personRepository.findBySotu("1111");
+        assertEquals("1111", sotuPerson.getSotu());
 
         //should not be null
         assertNotNull(fetchedPerson);
@@ -49,6 +59,7 @@ public class PersonRepositoryTest {
         //get from DB, should be updated
         Person fetchedUpdatedPerson = personRepository.findById(fetchedPerson.getId()).orElse(null);
         assertEquals(fetchedPerson.getFirstName(), fetchedUpdatedPerson.getFirstName());
+
 
         //verify count of persons in DB
         long personCount = personRepository.count();

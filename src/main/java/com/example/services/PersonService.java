@@ -8,5 +8,7 @@ public interface PersonService {
 
     Person getPersonById(Integer id);
 
+    Person getPersonBySotu(String sotu);
+
     Person savePerson(Person person);
 }

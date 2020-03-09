@@ -30,6 +30,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Person getPersonBySotu(String sotu) {
+        return personRepository.findBySotu(sotu);
+    }
+
+    @Override
     public Person savePerson(Person person) {
         log.info("PersonServiceImpl save for "+person.getFirstName());
         return personRepository.saveAndFlush(person);

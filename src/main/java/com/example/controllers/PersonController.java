@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +20,6 @@ import java.util.Date;
 public class PersonController {
 
     private PersonService personService;
-
     private Logger log = LogManager.getLogger(PersonService.class);
 
     @Autowired
@@ -53,10 +49,35 @@ public class PersonController {
     }
 
     @RequestMapping("person/new")
-    public String newProduct(Model model){
+    public String newPerson(Model model){
         model.addAttribute("person", new Person());
         log.info("personform returned. creating new person.");
         return "personform";
+    }
+
+    @RequestMapping("person/query")
+    public String query(Model model){
+        model.addAttribute("person", new Person());
+        log.info("personquery returned");
+        return "personquery";
+    }
+
+    @RequestMapping(value = "/person/find", method = RequestMethod.GET)
+    public String findPerson(@RequestParam("sotu") String sotu, Model model) {
+
+        log.info("findPerson called with sotu: " +sotu);
+        Person person = personService.getPersonBySotu(sotu);
+        if (person != null) {
+            log.info("person found with sotu is: " + person.getFirstName());
+        } else {
+            log.info("null person found with sotu");
+            Person emptyPerson = new Person();
+            emptyPerson.setFirstName("no person found");
+            model.addAttribute("person", emptyPerson);
+            return "personshow";
+        }
+        model.addAttribute("person", person);
+        return "personshow";
     }
 
     @RequestMapping(value = "person", method = RequestMethod.POST)
