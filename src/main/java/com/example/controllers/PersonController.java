@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.domain.Person;
+import com.example.domain.Education;
 import com.example.services.PersonService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,8 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Transactional
 @Controller
@@ -43,7 +46,8 @@ public class PersonController {
 
     @RequestMapping("person/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("person", personService.getPersonById(id));
+        Person person = personService.getPersonById(id);
+        model.addAttribute("person", person);
         log.info("personform returned. editing existing person.");
         return "personform";
     }

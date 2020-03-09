@@ -13,4 +13,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     public Person findBySotu(String sotu);
 
+    public Person findByLastNameAndFirstName(String lastName, String firstName);
+
 }

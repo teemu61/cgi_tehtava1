@@ -3,6 +3,7 @@ package com.example.bootstrap;
 import com.example.domain.Person;
 import com.example.domain.Address;
 
+import com.example.domain.Education;
 import com.example.repositories.PersonRepository;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,10 +42,13 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         addressJussi.setCity("Espoo");
         addressJussi.setPostalCode("02780");
         jussi.setAddress(addressJussi);
+
         jussi.setSotu("9865-983456");
         jussi.setLanguage("Suomi");
         jussi.setDateOfBirth(this.getDate("06/01/1998"));
-        personRespository.save(jussi);
+
+        log.info("BEFORE saving jussi to database");
+        Person jussiSaved = personRespository.save(jussi);
 
         log.info("Saved Jussi - id: " +jussi.getId());
 
@@ -59,9 +63,9 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         ilmo.setSotu("0345-567891");
         ilmo.setLanguage("Suomi");
         ilmo.setDateOfBirth(this.getDate("03/07/1963"));
+
         personRespository.save(ilmo);
 
-        log.info("Saved Ilmo - id: " +ilmo.getId());
 
         Person ilpo = new Person();
         ilpo.setFirstName("Ilpo");
@@ -79,6 +83,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         ilpoKids.add(jussi);
         ilpoKids.add(ilmo);
         ilpo.setParentTo(ilpoKids);
+
         personRespository.save(ilpo);
 
         log.info("Saved Ilpo - id: " +ilpo.getId());
@@ -100,6 +105,8 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
                 log.info("- " +p.getFirstName());
         }
 
+        Person fetchIlpo = personRespository.findByLastNameAndFirstName("Rantanen", "Ilpo");
+        log.info("fetchIlpo is: " +fetchIlpo.getFirstName());
     }
 
     private Date getDate(String date) {

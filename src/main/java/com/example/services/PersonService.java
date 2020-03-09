@@ -10,5 +10,7 @@ public interface PersonService {
 
     Person getPersonBySotu(String sotu);
 
+    Person getPersonByName(String lastName, String firstName);
+
     Person savePerson(Person person);
 }

@@ -35,6 +35,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Person getPersonByName(String lastName, String firstName) {
+        return personRepository.findByLastNameAndFirstName(lastName, firstName);
+    }
+
+    @Override
     public Person savePerson(Person person) {
         log.info("PersonServiceImpl save for "+person.getFirstName());
         return personRepository.saveAndFlush(person);

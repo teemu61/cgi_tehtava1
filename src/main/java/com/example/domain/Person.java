@@ -11,7 +11,7 @@ import java.util.Set;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String lastName;
@@ -19,6 +19,9 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @OneToMany(mappedBy="person", cascade = CascadeType.MERGE)
+    private Set<Education> educations;
 
     private String sotu;
     private String language;
@@ -72,6 +75,8 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+    public Set<Education> getEducations() {return educations;}
+    public void setEducations(Set<Education> educations) {this.educations = educations;}
 
     public Person init() {
         parentTo = new HashSet<>();
