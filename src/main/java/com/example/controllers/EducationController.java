@@ -45,21 +45,21 @@ public class EducationController {
     }
 
     @RequestMapping("education/{id}")
-    public String showPerson(@PathVariable Integer id, Model model ){
+    public String showEducation(@PathVariable Integer id, Model model ){
         model.addAttribute("education", educationService.getEducationById(id));
         log.info("educationshow returned - fetch education from DB by id");
         return "educationshow";
     }
 
     @RequestMapping("education/edit")
-    public String showPerson(Education education, Model model ){
+    public String showEducation(Education education, Model model ){
         model.addAttribute("education", education);
         log.info("redirect to education edit with pid: " +education.getPid());
         return "redirect:/education/edit/" +education.getPid();
     }
 
     @RequestMapping("education/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model){
+    public String editEducation(@PathVariable Integer id, Model model){
         Education education = educationService.getEducationById(id);
         log.info("fetch existing education using id from form: " +id);
         Person person = education.getPerson();
@@ -95,7 +95,6 @@ public class EducationController {
         educationService.saveEducation(education);
         log.info("redirect returned - save education");
         return  "redirect:/educations/" + person.getId()  ;
-        //return "redirect:/educations";
     }
     @RequestMapping(value = "educationedit", method = RequestMethod.POST)
     public String saveEducationEdit(Education education){
@@ -110,11 +109,4 @@ public class EducationController {
         return "redirect:/educations";
     }
 
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }
 }

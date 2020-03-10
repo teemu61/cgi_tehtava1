@@ -102,11 +102,5 @@ public class PersonController {
         log.info("redirect returned - save person");
         return "redirect:/person/" + person.getId();
     }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }
+    
 }
