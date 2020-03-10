@@ -66,7 +66,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         newEdus.add(edu2);
 
         jussiSaved1.setEducations(newEdus);
-        
+
         Person ilmo = new Person();
         ilmo.setFirstName("Ilmo");
         ilmo.setLastName("Rantanen");

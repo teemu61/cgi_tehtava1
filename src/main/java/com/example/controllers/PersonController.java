@@ -87,7 +87,8 @@ public class PersonController {
         } else {
             log.info("null person found with sotu");
             Person emptyPerson = new Person();
-            emptyPerson.setFirstName("no person found");
+            emptyPerson.setSotu(sotu);
+            emptyPerson.setFirstName(" no person found");
             model.addAttribute("person", emptyPerson);
             return "personshow";
         }
