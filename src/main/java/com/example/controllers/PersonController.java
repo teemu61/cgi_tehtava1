@@ -31,56 +31,53 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/persons", method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Model model) {
         model.addAttribute("persons", personService.listAllPersons());
-        log.info("persons returned - show persons");
+        log.info("show all persons");
         return "persons";
     }
 
     @RequestMapping("person/{id}")
-    public String showPerson(@PathVariable Integer id, Model model ){
+    public String showPerson(@PathVariable Integer id, Model model) {
         model.addAttribute("person", personService.getPersonById(id));
 
-        log.info("personshow returned - fetch person from DB by id");
+        log.info("show persons with specific id");
         return "personshow";
     }
 
     @RequestMapping("person/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model){
+    public String edit(@PathVariable Integer id, Model model) {
         Person person = personService.getPersonById(id);
         model.addAttribute("person", person);
-        log.info("personform returned. editing existing person.");
+        log.info("return personform for editing existing person.");
         return "personform";
     }
 
     @RequestMapping("person/new")
-    public String newPerson(Model model){
+    public String newPerson(Model model) {
         model.addAttribute("person", new Person());
-        log.info("personform returned. creating new person.");
+        log.info("return personform for creating new a person.");
         return "personform";
     }
 
     @RequestMapping("person/education")
-    public String education(Model model){
-
-        //Education education = new Education();
-
+    public String education(Model model) {
         model.addAttribute("education", new Education());
         log.info("educationform returned.");
         return "educationform";
     }
 
     @RequestMapping("person/query")
-    public String query(Model model){
+    public String query(Model model) {
         model.addAttribute("person", new Person());
-        log.info("personquery returned");
+        log.info("return personform for quering with sotu");
         return "personquery";
     }
 
     @RequestMapping(value = "/person/find", method = RequestMethod.GET)
     public String findPerson(@RequestParam("sotu") String sotu, Model model) {
 
-        log.info("findPerson called with sotu: " +sotu);
+        log.info("findPerson called with sotu: " + sotu);
         Person person = personService.getPersonBySotu(sotu);
         if (person != null) {
             log.info("person found with sotu is: " + person.getFirstName());
@@ -97,10 +94,9 @@ public class PersonController {
     }
 
     @RequestMapping(value = "person", method = RequestMethod.POST)
-    public String savePerson(Person person){
+    public String savePerson(Person person) {
         personService.savePerson(person);
-        log.info("redirect returned - save person");
+        log.info("redirect to show person information");
         return "redirect:/person/" + person.getId();
     }
-    
 }

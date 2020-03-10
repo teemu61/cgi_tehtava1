@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Set;
+
 
 //@Transactional
 @Controller
@@ -47,7 +47,7 @@ public class EducationController {
     @RequestMapping("education/{id}")
     public String showEducation(@PathVariable Integer id, Model model ){
         model.addAttribute("education", educationService.getEducationById(id));
-        log.info("educationshow returned - fetch education from DB by id");
+        log.info("educationshow returned with education feched from DB by id");
         return "educationshow";
     }
 
@@ -70,7 +70,7 @@ public class EducationController {
             education.setPid(person.getId());
         }
         model.addAttribute("education", education);
-        log.info("educationformedit returned. editing existing education.");
+        log.info("educationformedit returned for editing existing education.");
         return "educationformedit";
     }
 
@@ -81,7 +81,7 @@ public class EducationController {
         Education education = new Education();
         education.setPid(pid);
         model.addAttribute("education", education);
-        log.info("educationform returned. creating new education.");
+        log.info("educationform returned for creating new education.");
         return "educationform";
     }
 
@@ -93,9 +93,11 @@ public class EducationController {
         education.setPerson(person);
         person.getEducations().add(education);
         educationService.saveEducation(education);
-        log.info("redirect returned - save education");
+        log.info("redirect returned for saving education");
         return  "redirect:/educations/" + person.getId()  ;
     }
+
+
     @RequestMapping(value = "educationedit", method = RequestMethod.POST)
     public String saveEducationEdit(Education education){
 
@@ -105,8 +107,15 @@ public class EducationController {
         fetchedEducation.setDescription(education.getDescription());
         fetchedEducation.setDate(education.getDate());
         educationService.saveEducation(fetchedEducation);
-        log.info("redirect returned - save modified education");
+        log.info("redirect returned for saving modified education");
         return "redirect:/educations";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }
