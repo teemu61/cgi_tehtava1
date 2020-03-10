@@ -12,11 +12,12 @@
 
     <!-- how to get person.id form this form to controller? -->
 
-    <h2>Education Details</h2>
+    <h2>Education Details Edit</h2>
     <div>
-        <form class="form-horizontal" th:object="${education}" th:action="@{/education}" method="post">
-            <input type="hidden" th:field="*{pid}"/>
-            <!--input type="text" th:field="*{pid}"/-->
+        <form class="form-horizontal" th:object="${education}" th:action="@{/education} " method="post">
+            <!--input type="hidden" th:field="*{pid}"/-->
+            <input type="text" th:field="*{pid}"/>
+            <input type="text" th:field="*{id}"/>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Description:</label>
@@ -30,6 +31,7 @@
                     <input type="text" class="form-control" th:field="*{date}"/>
                 </div>
             </div>
+
             <div class="row">
                 <button type="submit" class="btn btn-default">Submit</button>
             </div>

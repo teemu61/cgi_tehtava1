@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Set;
 
 //@Transactional
 @Controller
@@ -31,23 +32,24 @@ public class EducationController {
         this.personService = personService;
     }
 
-    @RequestMapping(value = "/educations", method = RequestMethod.GET)
-    public String list(Model model){
-        model.addAttribute("educations", educationService.listAllEducations());
-
-        Iterable<Education> i = educationService.listAllEducations();
+    @RequestMapping(value = "/educations/{pid}", method = RequestMethod.GET)
+    public String list(@PathVariable Integer pid, Model model){
+        Iterable<Education> i = educationService.listEducationsByPersonId(pid);
         Iterator<Education> it = i.iterator();
-        while (it.hasNext()){
-            Person person = it.next().getPerson();
-            if (person == null)
-                log.info("null person within Education from DB");
-            else
-                log.info("person found within Education from DB");
-        }
-
-        log.info("educations returned - show educations");
+        if (it.hasNext() == false)
+            log.info("no education found from DB");
+        model.addAttribute("educations", i);
+        //model.addAttribute("educations", educationService.listAllEducations());
+        log.info("show educations with pid");
         return "educations";
     }
+    @RequestMapping(value = "/educations", method = RequestMethod.GET)
+    public String list2(Model model){
+        model.addAttribute("educations", educationService.listAllEducations());
+        log.info("show educations without pid");
+        return "educations";
+    }
+
 
     @RequestMapping("education/{id}")
     public String showPerson(@PathVariable Integer id, Model model ){
@@ -56,25 +58,39 @@ public class EducationController {
         return "educationshow";
     }
 
+    @RequestMapping("education/edit")
+    public String showPerson(Education education, Model model ){
+        model.addAttribute("education", education);
+        log.info("redirect to education edit with pid: " +education.getPid());
+        return "redirect:/education/edit/" +education.getPid();
+    }
+
     @RequestMapping("education/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
         Education education = educationService.getEducationById(id);
+        log.info("fetch existing education using id from form: " +id);
 
         Person person = education.getPerson();
+
         if (person == null) {
             log.info("null person found within Education");
         } else {
-            log.info("person found witin Education from DB 2");
+            log.info("person found within Education. pid: " +person.getId());
             education.setPid(person.getId());
         }
         model.addAttribute("education", education);
-        log.info("educationform returned. editing existing education.");
-        return "educationform";
+        log.info("educationformedit returned. editing existing education.");
+        return "educationformedit";
     }
 
-    @RequestMapping("education/new")
-    public String newEducation(Model model){
-        model.addAttribute("education", new Education());
+    @RequestMapping("education/new/{pid}")
+    public String newEducation(@PathVariable Integer pid, Model model){
+
+        log.info("create new education. pid:"+pid);
+        Education education = new Education();
+        education.setPid(pid);
+
+        model.addAttribute("education", education);
         log.info("educationform returned. creating new education.");
         return "educationform";
     }
@@ -82,12 +98,30 @@ public class EducationController {
     @RequestMapping(value = "education", method = RequestMethod.POST)
     public String saveEducation(Education education){
 
+        log.info("POST new Education. pid: " +education.getPid());
         Person person = personService.getPersonById(education.getPid());
         education.setPerson(person);
+        person.getEducations().add(education);
+
         educationService.saveEducation(education);
         log.info("redirect returned - save education");
-        return "redirect:/education/" + education.getId();
+        return "redirect:/educations";
     }
+    @RequestMapping(value = "educationedit", method = RequestMethod.POST)
+    public String saveEducationEdit(Education education){
+
+        log.info("POST edited Education. id: " +education.getId() + " pid: " +education.getPid() );
+        Person person = personService.getPersonById(education.getPid());
+        Education fetchedEducation = educationService.getEducationById(education.getId());
+
+        fetchedEducation.setDescription(education.getDescription());
+        fetchedEducation.setDate(education.getDate());
+
+        educationService.saveEducation(fetchedEducation);
+        log.info("redirect returned - save modified education");
+        return "redirect:/educations";
+    }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

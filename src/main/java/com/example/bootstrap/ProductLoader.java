@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.text.SimpleDateFormat;
 
@@ -52,20 +53,29 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         jussi.setLanguage("Suomi");
         jussi.setDateOfBirth(this.getDate("06/01/1998"));
 
-        edu.setPerson(jussi);
+        Person jussiSaved1 = personRespository.saveAndFlush(jussi);
 
-        Set<Education> readEcucations = jussi.getEducations();
+        edu.setPerson(jussiSaved1);
+        edu.setPid(jussiSaved1.getId());
+
+        Set<Education> readEcucations = jussiSaved1.getEducations();
         if (readEcucations != null) {
             readEcucations.add(edu);
-            jussi.setEducations(readEcucations);
+            jussiSaved1.setEducations(readEcucations);
         } else {
           Set<Education> newEdus = new HashSet<>();
           newEdus.add(edu);
-          jussi.setEducations(newEdus);
+            jussiSaved1.setEducations(newEdus);
+        }
+        Person jussiSaved2 = personRespository.saveAndFlush(jussiSaved1);
+
+        Iterable edus = jussiSaved2.getEducations();
+        Iterator it = edus.iterator();
+        while(it.hasNext()){
+            Education ed = (Education)it.next();
+            log.info("education: " +ed.getDescription() + ", id: " +ed.getId() + ", pid: " +ed.getPid());
         }
 
-
-        Person jussiSaved = personRespository.saveAndFlush(jussi);
 
         log.info("Saved Jussi - id: " +jussi.getId());
 

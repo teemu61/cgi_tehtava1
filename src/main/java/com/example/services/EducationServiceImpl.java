@@ -26,7 +26,6 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public Iterable<Education> listAllEducations() {
-        log.info("educationservice listAllEducations called");
         return educationRepository.findAll();
     }
 
@@ -39,14 +38,14 @@ public class EducationServiceImpl implements EducationService {
     public Education saveEducation(Education education) {
 
         Person person = education.getPerson();
-
-        if (person != null)
-            log.info("saveEducation. "+person.getFirstName());
-        else
-            log.info("null person found when saving Education");
         person.getEducations().add(education);
-        log.info("after saving educations");
-
         return educationRepository.saveAndFlush(education);
     }
+
+    @Override
+    public Iterable<Education> listEducationsByPersonId(Integer id) {
+        log.info("listEducationsByPersonId called. id: "+id);
+        return educationRepository.findEducationByPid(id);
+    }
+
 }
