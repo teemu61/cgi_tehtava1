@@ -39,7 +39,7 @@ public class EducationController {
         if (it.hasNext() == false)
             log.info("no education found from DB");
         model.addAttribute("educations", i);
-        //model.addAttribute("educations", educationService.listAllEducations());
+        model.addAttribute("pid", pid);
         log.info("show educations with pid");
         return "educations";
     }
@@ -49,7 +49,6 @@ public class EducationController {
         log.info("show educations without pid");
         return "educations";
     }
-
 
     @RequestMapping("education/{id}")
     public String showPerson(@PathVariable Integer id, Model model ){
@@ -105,7 +104,8 @@ public class EducationController {
 
         educationService.saveEducation(education);
         log.info("redirect returned - save education");
-        return "redirect:/educations";
+        return  "redirect:/educations/" + person.getId()  ;
+        //return "redirect:/educations";
     }
     @RequestMapping(value = "educationedit", method = RequestMethod.POST)
     public String saveEducationEdit(Education education){
