@@ -35,9 +35,6 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        Education edu = new Education();
-        edu.setDescription("ylioppilas");
-
         Person jussi = new Person();
         jussi.setFirstName("Jussi");
         jussi.setLastName("Rantanen");
@@ -52,18 +49,24 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
         Person jussiSaved1 = personRespository.saveAndFlush(jussi);
 
+        //add education to jussi
+        Set<Education> newEdus = new HashSet<>();
+        Education edu = new Education();
+        edu.setDescription("ylioppilas");
         edu.setPerson(jussiSaved1);
         edu.setPid(jussiSaved1.getId());
         edu.setDate(this.getDate("01/06/2005"));
-
-        Set<Education> readEcucations = jussiSaved1.getEducations();
-
-        Set<Education> newEdus = new HashSet<>();
         newEdus.add(edu);
+
+        Education edu2 = new Education();
+        edu2.setDescription("diplomi-insinööri");
+        edu2.setPerson(jussiSaved1);
+        edu2.setPid(jussiSaved1.getId());
+        edu2.setDate(this.getDate("01/06/2010"));
+        newEdus.add(edu2);
+
         jussiSaved1.setEducations(newEdus);
-
-        Person jussiSaved2 = personRespository.saveAndFlush(jussiSaved1);
-
+        
         Person ilmo = new Person();
         ilmo.setFirstName("Ilmo");
         ilmo.setLastName("Rantanen");
