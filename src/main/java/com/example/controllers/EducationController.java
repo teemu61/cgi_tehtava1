@@ -62,9 +62,7 @@ public class EducationController {
     public String edit(@PathVariable Integer id, Model model){
         Education education = educationService.getEducationById(id);
         log.info("fetch existing education using id from form: " +id);
-
         Person person = education.getPerson();
-
         if (person == null) {
             log.info("null person found within Education");
         } else {
@@ -82,7 +80,6 @@ public class EducationController {
         log.info("create new education. pid:"+pid);
         Education education = new Education();
         education.setPid(pid);
-
         model.addAttribute("education", education);
         log.info("educationform returned. creating new education.");
         return "educationform";
@@ -95,7 +92,6 @@ public class EducationController {
         Person person = personService.getPersonById(education.getPid());
         education.setPerson(person);
         person.getEducations().add(education);
-
         educationService.saveEducation(education);
         log.info("redirect returned - save education");
         return  "redirect:/educations/" + person.getId()  ;
@@ -107,10 +103,8 @@ public class EducationController {
         log.info("POST edited Education. id: " +education.getId() + " pid: " +education.getPid() );
         Person person = personService.getPersonById(education.getPid());
         Education fetchedEducation = educationService.getEducationById(education.getId());
-
         fetchedEducation.setDescription(education.getDescription());
         fetchedEducation.setDate(education.getDate());
-
         educationService.saveEducation(fetchedEducation);
         log.info("redirect returned - save modified education");
         return "redirect:/educations";

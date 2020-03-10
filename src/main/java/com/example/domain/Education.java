@@ -9,10 +9,10 @@ public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private Integer pid;
-
     private String description;
+
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     @ManyToOne
@@ -25,6 +25,14 @@ public class Education {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
     public String getDescription() {
@@ -49,14 +57,6 @@ public class Education {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
     }
 }
 

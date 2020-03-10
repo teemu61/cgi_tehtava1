@@ -16,10 +16,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.text.ParseException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 @Component
@@ -57,27 +54,15 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
         edu.setPerson(jussiSaved1);
         edu.setPid(jussiSaved1.getId());
+        edu.setDate(this.getDate("01/06/2005"));
 
         Set<Education> readEcucations = jussiSaved1.getEducations();
-        if (readEcucations != null) {
-            readEcucations.add(edu);
-            jussiSaved1.setEducations(readEcucations);
-        } else {
-          Set<Education> newEdus = new HashSet<>();
-          newEdus.add(edu);
-            jussiSaved1.setEducations(newEdus);
-        }
+
+        Set<Education> newEdus = new HashSet<>();
+        newEdus.add(edu);
+        jussiSaved1.setEducations(newEdus);
+
         Person jussiSaved2 = personRespository.saveAndFlush(jussiSaved1);
-
-        Iterable edus = jussiSaved2.getEducations();
-        Iterator it = edus.iterator();
-        while(it.hasNext()){
-            Education ed = (Education)it.next();
-            log.info("education: " +ed.getDescription() + ", id: " +ed.getId() + ", pid: " +ed.getPid());
-        }
-
-
-        log.info("Saved Jussi - id: " +jussi.getId());
 
         Person ilmo = new Person();
         ilmo.setFirstName("Ilmo");
@@ -92,7 +77,6 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         ilmo.setDateOfBirth(this.getDate("03/07/1963"));
 
         personRespository.save(ilmo);
-
 
         Person ilpo = new Person();
         ilpo.setFirstName("Ilpo");
@@ -113,27 +97,26 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
         personRespository.save(ilpo);
 
-        log.info("Saved Ilpo - id: " +ilpo.getId());
+        log.info("Saved Ilpo - id: " + ilpo.getId());
 
         Set<Person> jussiParents = new HashSet<>();
         jussiParents.add(ilpo);
         jussi.setParentFrom(jussiParents);
         personRespository.save(jussi);
 
-
         log.info("Ilpo's kids are: ");
         for (Person p : ilpo.getParentTo()) {
-            log.info("- " +p.getFirstName());
+            log.info("- " + p.getFirstName());
         }
 
         log.info("Jussi's parents are:");
         for (Person p : jussi.getParentFrom()) {
             if (p != null)
-                log.info("- " +p.getFirstName());
+                log.info("- " + p.getFirstName());
         }
 
         Person fetchIlpo = personRespository.findByLastNameAndFirstName("Rantanen", "Ilpo");
-        log.info("fetchIlpo is: " +fetchIlpo.getFirstName());
+        log.info("fetchIlpo is: " + fetchIlpo.getFirstName());
     }
 
     private Date getDate(String date) {
@@ -145,4 +128,6 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         }
         return date2;
     }
+
+
 }

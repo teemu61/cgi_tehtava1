@@ -26,7 +26,7 @@ public class Person {
     private String sotu;
     private String language;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @ManyToMany
@@ -38,45 +38,82 @@ public class Person {
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public Set<Person> getParentTo() {
-        return parentTo;
+
+    public Address getAddress() {
+        return address;
     }
-    public void setParentTo(Set<Person> parentTo) {
-        this.parentTo = parentTo;
-    }
-    public Set<Person> getParentFrom() {
-        return parentFrom;
-    }
-    public void setParentFrom(Set<Person> parentFrom) {
-        this.parentFrom = parentFrom;
-    }
-    public String getSotu() {return sotu;}
-    public void setSotu(String sotu) {this.sotu = sotu;}
-    public String getLanguage() {return language;}
-    public void setLanguage(String language) {this.language = language;}
-    public Date getDateOfBirth() {return dateOfBirth;}
-    public void setDateOfBirth(Date dateOfBirth) {this.dateOfBirth = dateOfBirth;}
-    public Address getAddress() { return address; }
+
     public void setAddress(Address address) {
         this.address = address;
     }
-    public Set<Education> getEducations() {return educations;}
-    public void setEducations(Set<Education> educations) {this.educations = educations;}
+
+    public Set<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(Set<Education> educations) {
+        this.educations = educations;
+    }
+
+    public String getSotu() {
+        return sotu;
+    }
+
+    public void setSotu(String sotu) {
+        this.sotu = sotu;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Set<Person> getParentTo() {
+        return parentTo;
+    }
+
+    public void setParentTo(Set<Person> parentTo) {
+        this.parentTo = parentTo;
+    }
+
+    public Set<Person> getParentFrom() {
+        return parentFrom;
+    }
+
+    public void setParentFrom(Set<Person> parentFrom) {
+        this.parentFrom = parentFrom;
+    }
 
     public Person init() {
         parentTo = new HashSet<>();

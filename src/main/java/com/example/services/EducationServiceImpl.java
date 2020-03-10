@@ -44,7 +44,6 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public Iterable<Education> listEducationsByPersonId(Integer id) {
-        log.info("listEducationsByPersonId called. id: "+id);
         return educationRepository.findEducationByPid(id);
     }
 

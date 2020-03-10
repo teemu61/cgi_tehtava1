@@ -20,7 +20,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Iterable<Person> listAllPersons() {
-        log.info("personservice listAllPersons called");
         return personRepository.findAll();
     }
 
@@ -41,7 +40,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person savePerson(Person person) {
-        log.info("PersonServiceImpl save for "+person.getFirstName());
         return personRepository.saveAndFlush(person);
     }
 }
