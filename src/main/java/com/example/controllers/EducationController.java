@@ -43,12 +43,6 @@ public class EducationController {
         log.info("show educations with pid");
         return "educations";
     }
-    @RequestMapping(value = "/educations", method = RequestMethod.GET)
-    public String list2(Model model){
-        model.addAttribute("educations", educationService.listAllEducations());
-        log.info("show educations without pid");
-        return "educations";
-    }
 
     @RequestMapping("education/{id}")
     public String showPerson(@PathVariable Integer id, Model model ){
